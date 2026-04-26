@@ -11,15 +11,19 @@
     require_once __DIR__ . '/../includes/auth.php';
     require_once __DIR__ . '/../src/User.php';
     require_once __DIR__ . '/../src/TimeRecord.php';
+    require_once __DIR__ . '/../src/Alert.php';
     requireAdmin();
     
     $user = getCurrentUser();
     $userModel = new User();
     $timeRecord = new TimeRecord();
+    $alert = new Alert();
     
     $employees = $userModel->getAllEmployees();
     $totalUsers = $userModel->getTotalUsers();
     $workingUsers = $userModel->getWorkingUsersCount();
+    $unreadAlerts = $alert->getUnreadAlerts(10);
+    $alertStats = $alert->getAlertStats(7);
     
     $error = $_GET['error'] ?? null;
     $success = $_GET['success'] ?? null;
@@ -61,6 +65,52 @@
                             <span class="summary-value" style="color: #e74c3c;"><?php echo $totalUsers - $workingUsers; ?></span>
                         </div>
                     </div>
+                </div>
+                
+                <div class="card">
+                    <h3>Alertas (7 días)</h3>
+                    <div class="summary">
+                        <div class="summary-item">
+                            <span class="summary-label">Total Alertas:</span>
+                            <span class="summary-value"><?php echo $alertStats['total'] ?? 0; ?></span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Sin Leer:</span>
+                            <span class="summary-value" style="color: #e74c3c;"><?php echo $alertStats['no_leidas'] ?? 0; ?></span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Prioridad Alta:</span>
+                            <span class="summary-value" style="color: #e74c3c;"><?php echo $alertStats['alta'] ?? 0; ?></span>
+                        </div>
+                    </div>
+                    <div class="action-buttons" style="margin-top: 15px;">
+                        <a href="actions/generate-alerts.php" class="btn btn-sm btn-primary">Generar Alertas</a>
+                        <a href="admin-alerts.php" class="btn btn-sm btn-secondary">Ver Todas</a>
+                    </div>
+                </div>
+                
+                <div class="card full-width">
+                    <h3>Alertas Recientes</h3>
+                    <?php if (empty($unreadAlerts)): ?>
+                        <p>No hay alertas sin leer.</p>
+                    <?php else: ?>
+                        <ul class="alerts-list">
+                            <?php foreach ($unreadAlerts as $a): ?>
+                                <li class="alert-item priority-<?php echo escape($a['prioridad']); ?>">
+                                    <div class="alert-header">
+                                        <span class="badge badge-<?php echo $a['prioridad'] === 'alta' ? 'danger' : ($a['prioridad'] === 'media' ? 'warning' : 'badge-secondary'); ?>">
+                                            <?php echo escape(ucfirst($a['prioridad'])); ?>
+                                        </span>
+                                        <span class="alert-type"><?php echo escape($a['tipo_alerta']); ?></span>
+                                        <span class="alert-date"><?php echo date('d/m H:i', strtotime($a['fecha_creacion'])); ?></span>
+                                    </div>
+                                    <p class="alert-title"><?php echo escape($a['titulo']); ?></p>
+                                    <p class="alert-message"><?php echo escape($a['mensaje']); ?></p>
+                                    <p class="alert-user">Usuario: <?php echo escape($a['nombre'] . ' ' . $a['apellidos']); ?></p>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php endif; ?>
                 </div>
                 
                 <div class="card full-width">
