@@ -11,16 +11,23 @@
     require_once __DIR__ . '/../includes/auth.php';
     require_once __DIR__ . '/../src/TimeRecord.php';
     require_once __DIR__ . '/../src/Project.php';
+    require_once __DIR__ . '/../src/User.php';
     requireLogin();
     
     $user = getCurrentUser();
+    $userId = $user['id'];
+    
     $timeRecord = new TimeRecord();
     $project = new Project();
-    $isCheckedIn = $timeRecord->isCurrentlyCheckedIn($user['id']);
-    $lastCheckIn = $timeRecord->getLastCheckIn($user['id']);
-    $todayHours = $timeRecord->calculateTodayHours($user['id']);
-    $todayRecords = $timeRecord->getTodayRecords($user['id']);
+    $userModel = new User();
+    
+    $isCheckedIn = $timeRecord->isCurrentlyCheckedIn($userId);
+    $lastCheckIn = $timeRecord->getLastCheckIn($userId);
+    $todayHours = $timeRecord->calculateTodayHours($userId);
+    $todayRecords = $timeRecord->getTodayRecords($userId);
+    $recentRecords = $timeRecord->getUserRecords($userId, 10);
     $projects = $project->getAllActive();
+    $userProjects = $project->getUserProjectHours($userId);
     
     $error = $_GET['error'] ?? null;
     $success = $_GET['success'] ?? null;
@@ -30,7 +37,7 @@
         <header class="header">
             <h1>Panel de Control</h1>
             <div class="user-info">
-                <span>Bienvenido, <?php echo escape($user['nombre']); ?></span>
+                <span><?php echo escape($user['nombre'] . ' ' . $user['apellidos']); ?> (<?php echo escape(ucfirst($user['rol'])); ?>)</span>
                 <a href="logout.php" class="btn btn-secondary">Cerrar sesión</a>
             </div>
         </header>
@@ -46,18 +53,11 @@
         <main class="main-content">
             <div class="dashboard-grid">
                 <div class="card">
-                    <h3>Información de Usuario</h3>
-                    <p><strong>Nombre:</strong> <?php echo escape($user['nombre'] . ' ' . $user['apellidos']); ?></p>
-                    <p><strong>Email:</strong> <?php echo escape($user['email']); ?></p>
-                    <p><strong>Rol:</strong> <?php echo escape(ucfirst($user['rol'])); ?></p>
-                </div>
-                
-                <div class="card">
                     <h3>Fichaje</h3>
                     <div class="status">
                         <?php if ($isCheckedIn): ?>
                             <p class="checked-in">✓ Actualmente trabajando</p>
-                            <p class="time-info">Entrada: <?php echo date('H:i', strtotime($lastCheckIn['fecha_hora'])); ?></p>
+                            <p class="time-info">Desde: <?php echo date('H:i', strtotime($lastCheckIn['fecha_hora'])); ?></p>
                         <?php else: ?>
                             <p class="checked-out">○ No estás trabajando</p>
                         <?php endif; ?>
@@ -109,21 +109,25 @@
                             <span class="summary-label">Registros hoy:</span>
                             <span class="summary-value"><?php echo count($todayRecords); ?></span>
                         </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Proyectos hoy:</span>
+                            <span class="summary-value"><?php echo count(array_filter($userProjects, fn($p) => $p['total_registros'] > 0)); ?></span>
+                        </div>
                     </div>
                 </div>
                 
                 <div class="card">
-                    <h3>Registros de Hoy</h3>
-                    <?php if (empty($todayRecords)): ?>
-                        <p>No hay registros hoy.</p>
+                    <h3>Registros Recientes</h3>
+                    <?php if (empty($recentRecords)): ?>
+                        <p>No hay registros recientes.</p>
                     <?php else: ?>
                         <ul class="records-list">
-                            <?php foreach ($todayRecords as $record): ?>
+                            <?php foreach ($recentRecords as $record): ?>
                                 <li class="record-item">
                                     <span class="record-type <?php echo $record['tipo_registro']; ?>">
                                         <?php echo $record['tipo_registro'] === 'check-in' ? '→ Entrada' : '← Salida'; ?>
                                     </span>
-                                    <span class="record-time"><?php echo date('H:i', strtotime($record['fecha_hora'])); ?></span>
+                                    <span class="record-time"><?php echo date('d/m H:i', strtotime($record['fecha_hora'])); ?></span>
                                     <?php if ($record['proyecto_nombre']): ?>
                                         <span class="record-project"><?php echo escape($record['proyecto_nombre']); ?></span>
                                     <?php endif; ?>
@@ -132,6 +136,34 @@
                         </ul>
                     <?php endif; ?>
                 </div>
+                
+                <div class="card">
+                    <h3>Proyectos Activos</h3>
+                    <?php if (empty($projects)): ?>
+                        <p>No hay proyectos activos.</p>
+                    <?php else: ?>
+                        <ul class="simple-list">
+                            <?php foreach ($projects as $p): ?>
+                                <li class="simple-item">
+                                    <span class="item-name"><?php echo escape($p['nombre']); ?></span>
+                                    <?php if ($p['cliente']): ?>
+                                        <span class="item-meta"><?php echo escape($p['cliente']); ?></span>
+                                    <?php endif; ?>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php endif; ?>
+                </div>
+                
+                <?php if ($user['rol'] === 'admin'): ?>
+                <div class="card full-width">
+                    <h3>Accesos Rápidos (Admin)</h3>
+                    <div class="action-buttons">
+                        <a href="admin.php" class="btn btn-primary">Panel de Administrador</a>
+                        <a href="admin-projects.php" class="btn btn-secondary">Gestionar Proyectos</a>
+                    </div>
+                </div>
+                <?php endif; ?>
             </div>
         </main>
     </div>
