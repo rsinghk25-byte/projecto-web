@@ -3,7 +3,7 @@ class Database {
     private $host = 'localhost';
     private $dbname = 'control_horario';
     private $username = 'root';
-    private $password = '';
+    private $password = 'Rajdeep123415@';
     private $charset = 'utf8mb4';
     
     private static $instance = null;

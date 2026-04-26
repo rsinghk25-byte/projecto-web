@@ -32,10 +32,11 @@ function startSecureSession() {
 }
 
 // Escapar salida HTML para prevenir XSS
+if (!function_exists('escape')) {
 function escape($string) {
     return htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
 }
-
+}
 // Sanitizar entrada de texto
 function sanitizeInput($input) {
     $input = trim($input);
