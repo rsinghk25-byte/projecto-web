@@ -1,8 +1,14 @@
 <?php
-session_start();
+require_once __DIR__ . '/security.php';
+startSecureSession();
+setSecurityHeaders();
 
 function isLoggedIn() {
-    return isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true;
+    if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+        return false;
+    }
+    
+    return checkSessionActivity() && validateSession();
 }
 
 function requireLogin() {

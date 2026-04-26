@@ -7,18 +7,22 @@
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
+    <?php
+    require_once __DIR__ . '/../includes/security.php';
+    startSecureSession();
+    ?>
     <div class="container">
         <h1>Iniciar Sesión</h1>
         
         <?php if (isset($_GET['error'])): ?>
             <div class="error">
-                <?php echo htmlspecialchars($_GET['error']); ?>
+                <?php echo escape($_GET['error']); ?>
             </div>
         <?php endif; ?>
         
         <?php if (isset($_GET['success'])): ?>
             <div class="success">
-                <?php echo htmlspecialchars($_GET['success']); ?>
+                <?php echo escape($_GET['success']); ?>
             </div>
         <?php endif; ?>
         
@@ -29,6 +33,8 @@
         <?php endif; ?>
         
         <form action="actions/login.php" method="POST">
+            <?php echo csrfField(); ?>
+            
             <div class="form-group">
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" required 

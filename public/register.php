@@ -7,41 +7,47 @@
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
+    <?php
+    require_once __DIR__ . '/../includes/security.php';
+    startSecureSession();
+    ?>
     <div class="container">
         <h1>Registro de Usuario</h1>
         
         <?php if (isset($_GET['error'])): ?>
             <div class="error">
-                <?php echo htmlspecialchars($_GET['error']); ?>
+                <?php echo escape($_GET['error']); ?>
             </div>
         <?php endif; ?>
         
         <?php if (isset($_GET['success'])): ?>
             <div class="success">
-                <?php echo htmlspecialchars($_GET['success']); ?>
+                <?php echo escape($_GET['success']); ?>
             </div>
         <?php endif; ?>
         
         <form action="actions/register.php" method="POST">
+            <?php echo csrfField(); ?>
+            
             <div class="form-group">
                 <label for="nombre">Nombre:</label>
                 <input type="text" id="nombre" name="nombre" required 
                        maxlength="100" 
-                       value="<?php echo isset($_GET['old']['nombre']) ? htmlspecialchars($_GET['old']['nombre']) : ''; ?>">
+                       value="<?php echo isset($_GET['old']['nombre']) ? escape($_GET['old']['nombre']) : ''; ?>">
             </div>
             
             <div class="form-group">
                 <label for="apellidos">Apellidos:</label>
                 <input type="text" id="apellidos" name="apellidos" required 
                        maxlength="150"
-                       value="<?php echo isset($_GET['old']['apellidos']) ? htmlspecialchars($_GET['old']['apellidos']) : ''; ?>">
+                       value="<?php echo isset($_GET['old']['apellidos']) ? escape($_GET['old']['apellidos']) : ''; ?>">
             </div>
             
             <div class="form-group">
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" required 
                        maxlength="100"
-                       value="<?php echo isset($_GET['old']['email']) ? htmlspecialchars($_GET['old']['email']) : ''; ?>">
+                       value="<?php echo isset($_GET['old']['email']) ? escape($_GET['old']['email']) : ''; ?>">
             </div>
             
             <div class="form-group">
