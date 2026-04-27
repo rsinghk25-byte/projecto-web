@@ -461,6 +461,225 @@ h3, h4 {
     transition: width 0.3s ease;
 }
 
+/* Nuevos estilos modernos y mejorados */
+body {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+}
+
+.container {
+    background: rgba(255,255,255,0.95);
+    border-radius: 12px;
+    margin: 20px auto;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+}
+
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: none;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+.stat-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(135deg, var(--card-color) 0%, var(--card-color-dark) 100%);
+    color: white;
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255,255,255,0.1);
+    transform: translateX(-100%);
+    transition: transform 0.5s ease;
+}
+
+.stat-card:hover::before {
+    transform: translateX(0);
+}
+
+.stat-card.success {
+    --card-color: #2ecc71;
+    --card-color-dark: #27ae60;
+}
+
+.stat-card.warning {
+    --card-color: #f39c12;
+    --card-color-dark: #e67e22;
+}
+
+.stat-card.danger {
+    --card-color: #e74c3c;
+    --card-color-dark: #c0392b;
+}
+
+.stat-card.info {
+    --card-color: #3498db;
+    --card-color-dark: #2980b9;
+}
+
+.stat-card h3 {
+    color: white;
+    border: none;
+    margin: 0;
+    padding: 0;
+    font-size: 1rem;
+    opacity: 0.9;
+}
+
+.stat-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-top: 5px;
+}
+
+.stat-icon {
+    font-size: 3rem;
+    opacity: 0.3;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.alerts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.alert-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    padding: 18px;
+    border-radius: 8px;
+    margin: 0;
+    border: none;
+    background: #f8f9fa;
+    transition: all 0.3s ease;
+}
+
+.alert-item:hover {
+    background: #fff;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.alert-item.alert-alta, .alert-item.alert-danger {
+    border-left: 4px solid #e74c3c;
+    background: linear-gradient(90deg, #fef2f2 0%, #fff 100%);
+}
+
+.alert-item.alert-media, .alert-item.alert-warning {
+    border-left: 4px solid #f39c12;
+    background: linear-gradient(90deg, #fffbeb 0%, #fff 100%);
+}
+
+.alert-item.alert-baja, .alert-item.alert-info {
+    border-left: 4px solid #3498db;
+    background: linear-gradient(90deg, #eff6ff 0%, #fff 100%);
+}
+
+.alert-icon {
+    font-size: 1.8rem;
+    flex-shrink: 0;
+}
+
+.alert-content {
+    flex-grow: 1;
+}
+
+.alert-action {
+    margin-left: auto;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.empty-icon {
+    font-size: 4rem;
+    margin-bottom: 15px;
+    opacity: 0.5;
+}
+
+.table-row-unread {
+    background-color: #fff8e6 !important;
+    font-weight: 500;
+}
+
+.badge {
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.badge-info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+}
+
+/* Mejoras de colores para botones */
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.btn-primary:hover:not(:disabled) {
+    background: linear-gradient(135deg, #5a6fd6 0%, #6a4190 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+}
+
+.btn-success {
+    box-shadow: 0 4px 15px rgba(46, 204, 113, 0.4);
+}
+
+.btn-success:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(46, 204, 113, 0.5);
+}
+
+.btn-danger {
+    box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+}
+
+.btn-danger:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(231, 76, 60, 0.5);
+}
+
+.header h1 {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+h3 {
+    color: #4a5568;
+}
+
+.table th {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
 @media (max-width: 768px) {
     .header {
         flex-direction: column;
@@ -475,5 +694,19 @@ h3, h4 {
     
     .full-width {
         grid-column: 1;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .stat-card {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .container {
+        margin: 10px;
+        padding: 15px;
     }
 }

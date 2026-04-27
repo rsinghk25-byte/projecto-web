@@ -192,4 +192,47 @@ class Alert {
         
         return $result ? $result->fetch() : false;
     }
+
+    public function getUnreadForAdmin($limit = 100) {
+        $result = $this->db->query(
+            "SELECT a.id, a.usuario_id, a.tipo_alerta, a.titulo, a.mensaje, 
+                    a.prioridad as nivel, a.fecha_creacion as created_at, a.leida,
+                    u.nombre, u.apellidos
+             FROM alertas a
+             INNER JOIN usuarios u ON a.usuario_id = u.id
+             WHERE a.leida = 0
+             ORDER BY 
+                CASE a.prioridad 
+                    WHEN 'alta' THEN 1 
+                    WHEN 'media' THEN 2 
+                    WHEN 'baja' THEN 3 
+                END ASC,
+                a.fecha_creacion DESC
+             LIMIT ?",
+            [$limit]
+        );
+        
+        return $result ? $result->fetchAll() : [];
+    }
+
+    public function getAllForAdmin($limit = 200) {
+        $result = $this->db->query(
+            "SELECT a.id, a.usuario_id, a.tipo_alerta, a.titulo, a.mensaje, 
+                    a.prioridad as nivel, a.fecha_creacion as created_at, a.leida,
+                    u.nombre, u.apellidos
+             FROM alertas a
+             INNER JOIN usuarios u ON a.usuario_id = u.id
+             ORDER BY a.fecha_creacion DESC
+             LIMIT ?",
+            [$limit]
+        );
+        
+        return $result ? $result->fetchAll() : [];
+    }
+
+    public function markAllAsReadForAdmin() {
+        return $this->db->query(
+            "UPDATE alertas SET leida = 1, fecha_lectura = NOW() WHERE leida = 0"
+        );
+    }
 }
