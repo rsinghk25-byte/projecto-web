@@ -461,9 +461,21 @@ h3, h4 {
     transition: width 0.3s ease;
 }
 
-/* Nuevos estilos modernos y mejorados */
+/* 🌟 ESTILOS CORPORATIVOS MIXTY 🌟 */
+:root {
+    --mixty-primary: #FF5A1F;
+    --mixty-primary-dark: #E04E1B;
+    --mixty-secondary: #1A1A2E;
+    --mixty-secondary-light: #16213E;
+    --mixty-accent: #0F3460;
+    --mixty-success: #00C851;
+    --mixty-warning: #ffbb33;
+    --mixty-danger: #ff4444;
+    --mixty-gray: #4B5563;
+}
+
 body {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, var(--mixty-secondary) 0%, var(--mixty-secondary-light) 50%, var(--mixty-accent) 100%);
     min-height: 100vh;
 }
 
@@ -512,23 +524,28 @@ body {
 }
 
 .stat-card.success {
-    --card-color: #2ecc71;
-    --card-color-dark: #27ae60;
+    --card-color: var(--mixty-success);
+    --card-color-dark: #007E33;
 }
 
 .stat-card.warning {
-    --card-color: #f39c12;
-    --card-color-dark: #e67e22;
+    --card-color: var(--mixty-warning);
+    --card-color-dark: #FF8800;
 }
 
 .stat-card.danger {
-    --card-color: #e74c3c;
-    --card-color-dark: #c0392b;
+    --card-color: var(--mixty-danger);
+    --card-color-dark: #CC0000;
 }
 
 .stat-card.info {
-    --card-color: #3498db;
-    --card-color-dark: #2980b9;
+    --card-color: var(--mixty-accent);
+    --card-color-dark: var(--mixty-secondary);
+}
+
+.stat-card.mixty {
+    --card-color: var(--mixty-primary);
+    --card-color-dark: var(--mixty-primary-dark);
 }
 
 .stat-card h3 {
@@ -636,14 +653,14 @@ body {
 
 /* Mejoras de colores para botones */
 .btn-primary {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    background: linear-gradient(135deg, var(--mixty-primary) 0%, var(--mixty-primary-dark) 100%);
+    box-shadow: 0 4px 15px rgba(255, 90, 31, 0.4);
 }
 
 .btn-primary:hover:not(:disabled) {
-    background: linear-gradient(135deg, #5a6fd6 0%, #6a4190 100%);
+    background: linear-gradient(135deg, #FF7033 0%, var(--mixty-primary-dark) 100%);
     transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+    box-shadow: 0 6px 25px rgba(255, 90, 31, 0.5);
 }
 
 .btn-success {
@@ -665,10 +682,22 @@ body {
 }
 
 .header h1 {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, var(--mixty-primary) 0%, var(--mixty-primary-dark) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.mixty-logo {
+    font-weight: 900;
+    font-size: 1.8rem;
+    background: linear-gradient(135deg, var(--mixty-primary) 0%, #FF9500 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -1px;
 }
 
 h3 {
@@ -676,8 +705,9 @@ h3 {
 }
 
 .table th {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, var(--mixty-secondary) 0%, var(--mixty-accent) 100%);
     color: white;
+    font-weight: 700;
 }
 
 @media (max-width: 768px) {
