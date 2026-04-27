@@ -134,4 +134,11 @@ class User {
         $data = $result ? $result->fetch() : false;
         return $data ? $data['total'] : 0;
     }
+
+    public function updateRole($userId, $newRole) {
+        return $this->db->query(
+            "UPDATE usuarios SET rol = ? WHERE id = ?",
+            [$newRole, $userId]
+        );
+    }
 }

@@ -159,7 +159,15 @@
                                                 <strong><?php echo number_format($todayHours, 2); ?>h</strong>
                                             </td>
                                             <td>
-                                                <a href="admin-user.php?id=<?php echo $emp['id']; ?>" class="btn btn-sm btn-secondary">Ver</a>
+                                                <form method="POST" action="actions/assign-role.php" style="display:inline; margin-right: 8px;">
+                                                    <input type="hidden" name="user_id" value="<?php echo $emp['id']; ?>">
+                                                    <select name="role" onchange="this.form.submit()" class="btn btn-sm" style="width: auto; padding: 4px 8px;">
+                                                        <option value="empleado" <?php echo $emp['rol'] === 'empleado' ? 'selected' : ''; ?>>👷 Empleado</option>
+                                                        <option value="jefe" <?php echo $emp['rol'] === 'jefe' ? 'selected' : ''; ?>>👔 Jefe</option>
+                                                        <option value="recepcionista" <?php echo $emp['rol'] === 'recepcionista' ? 'selected' : ''; ?>>📞 Recepcionista</option>
+                                                        <option value="admin" <?php echo $emp['rol'] === 'admin' ? 'selected' : ''; ?>>⚙️ Admin</option>
+                                                    </select>
+                                                </form>
                                                 <?php if ($emp['activo']): ?>
                                                     <a href="actions/deactivate-user.php?id=<?php echo $emp['id']; ?>" 
                                                        class="btn btn-sm btn-danger" 
