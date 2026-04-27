@@ -5,14 +5,13 @@ require_once __DIR__ . '/../config/database.php';
 startSecureSession();
 
 function redirectWithError($error) {
-    header("Location: /public/login.php?error=" . urlencode($error));
+    header("Location: login.php?error=" . urlencode($error));
     exit;
 }
 
 function redirectToIntended() {
-    $intended = $_SESSION['intended_url'] ?? '/public/dashboard.php';
-    unset($_SESSION['intended_url']);
-    header("Location: " . $intended);
+    $isAdmin = isset($_SESSION['user_rol']) && $_SESSION['user_rol'] === 'admin';
+    header("Location: " . ($isAdmin ? 'admin.php' : 'dashboard.php'));
     exit;
 }
 
