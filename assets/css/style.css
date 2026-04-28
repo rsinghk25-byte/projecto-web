@@ -698,6 +698,11 @@ body {
     -webkit-text-fill-color: transparent;
     background-clip: text;
     letter-spacing: -1px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    filter: none;
+    text-shadow: none;
+    opacity: 1;
 }
 
 h3 {

@@ -159,15 +159,18 @@
                                                 <strong><?php echo number_format($todayHours, 2); ?>h</strong>
                                             </td>
                                             <td>
-                                                <form method="POST" action="actions/assign-role.php" style="display:inline; margin-right: 8px;">
-                                                    <input type="hidden" name="user_id" value="<?php echo $emp['id']; ?>">
-                                                    <select name="role" onchange="this.form.submit()" class="btn btn-sm" style="width: auto; padding: 4px 8px;">
-                                                        <option value="empleado" <?php echo $emp['rol'] === 'empleado' ? 'selected' : ''; ?>>👷 Empleado</option>
-                                                        <option value="jefe" <?php echo $emp['rol'] === 'jefe' ? 'selected' : ''; ?>>👔 Jefe</option>
-                                                        <option value="recepcionista" <?php echo $emp['rol'] === 'recepcionista' ? 'selected' : ''; ?>>📞 Recepcionista</option>
-                                                        <option value="admin" <?php echo $emp['rol'] === 'admin' ? 'selected' : ''; ?>>⚙️ Admin</option>
-                                                    </select>
-                                                </form>
+                                                <div style="display: flex; gap: 8px; align-items: center;">
+                                                    <form method="POST" action="actions/assign-role.php">
+                                                        <input type="hidden" name="user_id" value="<?php echo $emp['id']; ?>">
+                                                        <select name="role" onchange="this.form.submit()" 
+                                                                style="padding: 6px 12px; border-radius: 6px; border: 1px solid #e2e8f0; 
+                                                                       font-weight: 500; background: white; cursor: pointer;">
+                                                            <option value="empleado" <?php echo $emp['rol'] === 'empleado' ? 'selected' : ''; ?>>👷 Empleado</option>
+                                                            <option value="jefe" <?php echo $emp['rol'] === 'jefe' ? 'selected' : ''; ?>>👔 Jefe</option>
+                                                            <option value="recepcionista" <?php echo $emp['rol'] === 'recepcionista' ? 'selected' : ''; ?>>📞 Recepcionista</option>
+                                                            <option value="admin" <?php echo $emp['rol'] === 'admin' ? 'selected' : ''; ?>>⚙️ Administrador</option>
+                                                        </select>
+                                                    </form>
                                                 <?php if ($emp['activo']): ?>
                                                     <a href="actions/deactivate-user.php?id=<?php echo $emp['id']; ?>" 
                                                        class="btn btn-sm btn-danger" 
