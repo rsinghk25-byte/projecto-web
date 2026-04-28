@@ -4,7 +4,7 @@ require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../src/TimeRecord.php';
 
 function redirectBack($error = null, $success = null) {
-    $referer = $_SERVER['HTTP_REFERER'] ?? '/public/dashboard.php';
+    $referer = $_SERVER['HTTP_REFERER'] ?? 'dashboard.php';
     $params = [];
     if ($error) $params['error'] = $error;
     if ($success) $params['success'] = $success;

@@ -14,7 +14,7 @@ function isLoggedIn() {
 function requireLogin() {
     if (!isLoggedIn()) {
         $_SESSION['intended_url'] = $_SERVER['REQUEST_URI'];
-        header("Location: /public/login.php");
+        header("Location: login.php");
         exit;
     }
 }
@@ -39,7 +39,7 @@ function isAdmin() {
 function requireAdmin() {
     requireLogin();
     if (!isAdmin()) {
-        header("Location: /public/dashboard.php");
+        header("Location: dashboard.php");
         exit;
     }
 }
@@ -51,7 +51,7 @@ function logout() {
         setcookie(session_name(), '', time() - 3600, '/');
     }
     session_destroy();
-    header("Location: /public/login.php?logout=1");
+    header("Location: login.php?logout=1");
     exit;
 }
 

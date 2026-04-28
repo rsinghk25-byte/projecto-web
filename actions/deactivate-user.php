@@ -9,15 +9,15 @@ $userId = intval($_GET['id'] ?? 0);
 $currentUserId = $_SESSION['user_id'];
 
 if ($userId === $currentUserId) {
-    header("Location: /public/admin.php?error=No puedes desactivarte a ti mismo");
+    header("Location: admin.php?error=No puedes desactivarte a ti mismo");
     exit;
 }
 
 try {
     $userModel = new User();
     $userModel->toggleActive($userId, false);
-    header("Location: /public/admin.php?success=Usuario desactivado correctamente");
+    header("Location: admin.php?success=Usuario desactivado correctamente");
 } catch (Exception $e) {
     error_log("Error al desactivar usuario: " . $e->getMessage());
-    header("Location: /public/admin.php?error=Error al desactivar usuario");
+    header("Location: admin.php?error=Error al desactivar usuario");
 }

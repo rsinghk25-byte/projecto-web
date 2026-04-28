@@ -14,14 +14,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $success = $userModel->updateRole($userId, $newRole);
         
         if ($success) {
-            header("Location: ../public/admin.php?success=Rol actualizado correctamente");
+            header("Location: ..admin.php?success=Rol actualizado correctamente");
             exit;
         }
     }
     
-    header("Location: ../public/admin.php?error=Error al actualizar rol");
+    header("Location: ..admin.php?error=Error al actualizar rol");
     exit;
 }
 
-header("Location: ../public/admin.php");
+header("Location: ..admin.php");
 exit;

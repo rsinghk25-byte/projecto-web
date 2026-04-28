@@ -9,12 +9,12 @@ function redirectWithError($error, $oldData = []) {
         'error' => $error,
         'old' => $oldData
     ]);
-    header("Location: /public/register.php?" . $params);
+    header("Location: register.php?" . $params);
     exit;
 }
 
 function redirectWithSuccess($message) {
-    header("Location: /public/login.php?success=" . urlencode($message));
+    header("Location: login.php?success=" . urlencode($message));
     exit;
 }
 
